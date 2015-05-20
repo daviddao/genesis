@@ -5,8 +5,6 @@
  * @ingroup main
  */
 
-//~ #include "main/main.hpp"
-
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -54,7 +52,7 @@ int main (int argc, char* argv[])
     //     Program startup routines
     // =============================================================================
 
-    Logging::AddOutputStream(std::cout);
+    Logging::LogToStdout();
     //~ Logging::details.level = true;
     //~ Logging::details.file = true;
     //~ Logging::details.line = true;
@@ -67,8 +65,8 @@ int main (int argc, char* argv[])
     Options::Init(argc, argv);
     LOG_TIME << "started";
 
-    Plausibility p;
-    p.SpiderpigFunction("largetree.txt", "reference-two-big.txt");
+    //~ Plausibility p;
+    //~ p.SpiderpigFunction("largetree.txt", "reference-two-big.txt");
 
     // =============================================================================
     //     Test cases for tree iterators
