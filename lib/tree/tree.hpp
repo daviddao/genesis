@@ -49,7 +49,7 @@ class TreeIteratorLevelorder;
  * @brief Basic class for representing phylogenetic tree topologies.
  *
  * A tree in this implementation consists of three types of elements: Links, Nodes and Edges.
- * The topoloty of the tree is completely described by the links, while nodes and edges add the
+ * The topology of the tree is completely described by the links, while nodes and edges add the
  * capability to store data on the tree.
  *
  * Data in the Tree is not directly stored in the elements (Links, Nodes, Edges) of the Tree.
