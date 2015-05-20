@@ -77,7 +77,10 @@ void Plausibility::SpiderpigFunction (
     // RMQ query
     //LOG_DBG << "euler[" << rmq.query(1,10000) << "]" << " is " << euler_array[rmq.query(1,1000)];
     
-    std::vector<int> preorder_ids;
+
+    // TODO this should be done for each small tree!
+
+    std::vector<pair<int,bool>> preorder_ids;
     preorder_ids.reserve(2 * small_tree.NodeCount());
 
     for (
@@ -86,7 +89,7 @@ void Plausibility::SpiderpigFunction (
         ++it
     ) {
         if(it.Node()->IsLeaf()) {
-            preorder_ids.push_back(reference_map[it.Node()->name]);
+            preorder_ids.push_back(std::make_pair(reference_map[it.Node()->name],1));
         }
     }
 
@@ -98,28 +101,36 @@ void Plausibility::SpiderpigFunction (
         euler_idy,
         euler_res;
 
-    for(
+    for (
         size_t i = 0;
         i < small_tree.LeafCount() - 1;
         ++i 
     ) { 
         // get the euler index of the preorderids
-        euler_idx = preorder_to_euler_map[preorder_ids[i]];
-        euler_idy = preorder_to_euler_map[preorder_ids[i + 1]];
+        euler_idx = preorder_to_euler_map[preorder_ids[i].first];
+        euler_idy = preorder_to_euler_map[preorder_ids[i + 1].first];
 
         // do a rmq query and get the euler id of the minimum preorder id
         euler_res = rmq.query(euler_idx,euler_idy);
         // push the preorder id into our vector
-        preorder_ids.push_back(euler_array[euler_res]);
+        preorder_ids.push_back(std::make_pair(euler_array[euler_res],0));
     }
 
-    // assertion that loop went correct
+    // assertion that the loop went correct
     assert(preorder_ids.size() == (2*small_tree.LeafCount() - 1));
 
     // sort the preorder vector the second time
     std::sort(preorder_ids.begin(),preorder_ids.end());
 
     // TODO: get the bipartitions from the sorted array 
+    for (
+        size_t i = 0;
+        i < preorder_ids.size();
+        ++i
+    ) {
+        //LOG_DBG << preorder_ids[i].first << ':' << preorder_ids[i].second << '\n';
+    }
+
 
 }
 
